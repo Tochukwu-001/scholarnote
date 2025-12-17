@@ -5,5 +5,8 @@ export default function Home() {
     <main>
       landing page 
     </main>
+   <main>
+    landing page
+   </main>
   );
 }
