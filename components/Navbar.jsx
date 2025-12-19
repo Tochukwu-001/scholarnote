@@ -26,9 +26,9 @@ const navbar = () => {
         {
       label:"Library",
       url:"/resources"
-      }
+        }
 ]}
-  return (
+  return {(
     <nav className='flex justify-between md:px-10 p-3 py-2 shadow-md sticky top-0'>
       <Link href={"/"} className='flex items-center gap-1'>
       <image src={"/logo.png"} alt ='logo' width={500} height={500} className='w-10 h-10'/>
@@ -40,7 +40,7 @@ const navbar = () => {
         navLinks.map((item, index)=> (
           <Link key={index} href={item.url}   className='hover:text-orange-600 transition-all:duration-200'>{item.label}</Link>      ))
       }
-     <Link href={'#'} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600 transition-all duration-200'><FiUser/><p>Sign In<p/>
+     <Link href={'#'} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600 transition-all duration-200'><FiUser/><p>Sign In</p>
      </Link>
       
      </div>
@@ -53,7 +53,7 @@ const navbar = () => {
              </button>
     </nav>
   )
-}
+  }
 
      <link href={"#"}>Sign in</link>
 export default navbar
