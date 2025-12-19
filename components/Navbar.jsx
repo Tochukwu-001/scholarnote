@@ -30,8 +30,8 @@ const Navbar = () => {
     ]
 
     return (
-        <section className='relative'>
-            <nav className='flex items-center justify-between md:px-10 p-3 py-3 shadow-md sticky top-0'>
+        <section className='sticky top-0'>
+            <nav className='flex items-center justify-between md:px-10 p-3 py-3 shadow-md relative bg-white'>
                 <Link href={"/"} className='flex items-center gap-1 z-50'>
                     <Image src={"/logo.png"} alt='logo' width={500} height={500} className='w-10 h-10' />
                     <p className='max-md:hidden'>ScholarNote</p>
