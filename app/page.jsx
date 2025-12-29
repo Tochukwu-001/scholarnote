@@ -1,12 +1,9 @@
-import React from 'react'
+import Image from "next/image";
 
-const page = () => {
+export default function Home() {
   return (
-    <div>
-      
-    </div>
-  )
+   <main>
+    landing page
+   </main>
+  );
 }
-
-export default page
-
