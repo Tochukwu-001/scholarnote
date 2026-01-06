@@ -44,7 +44,7 @@ const Navbar = () => {
                         ))
                     }
                 </div>
-                <Link href={"#"} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600  transition-all duration-200 max-md:ml-auto z-50'><FiUser /> <p className='max-md:hidden'>Sign In</p></Link>
+                <Link href={"/auth/signin"} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600  transition-all duration-200 max-md:ml-auto z-50'><FiUser /> <p className='max-md:hidden'>Sign In</p></Link>
 
                 {/* mobile and tablet navbar */}
                 <div className={`h-dvh bg-white lg:hidden w-full absolute top-0 left-0 flex-col items-center gap-10 pt-20 ${open ? "flex" : "hidden"} `}>
