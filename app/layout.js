@@ -1,5 +1,4 @@
 import { Geist, Geist_Mono, Raleway } from "next/font/google";
-import { Raleway } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -21,7 +20,7 @@ export default function RootLayout({ children }) {
         className={`${raleway.className} antialiased`}
       >
         <Navbar/>
-        <page/>
+        {children}
         <Footer />
       </body>
     </html>
