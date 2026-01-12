@@ -1,42 +1,65 @@
 "use client";
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { FaPaperPlane } from "react-icons/fa";
+import * as Yup from 'yup';
 
 
 const Client = () => {
+  const iv = {
+    title: "",
+    category: "",
+    note: ""
+  }
+
+  const formValidation = Yup.object({
+    title: Yup.string().required("This is a required field").max(100, "Max of 100 characters"),
+    category: Yup.string().required("This is a required field"),
+    note: Yup.string().required("This is a required field")
+  })
+
   return (
-    <main className='min-h-dvh'>
-      <h1>Fill out the form below to contribute to our fast growing community of Researchers</h1>
+    <main className='min-h-dvh p-3'>
+      <h1 className='md:max-w-2xl text-center text-2xl md:text-3xl text-gray-700 mx-auto font-bold my-10'>Fill out the form below to contribute to our fast growing community of Researchers</h1>
 
-      <section>
-        <Formik>
-            <Form>
-                <div>
-                    <label htmlFor="">Research Title</label>
-                    <Field/>
-                </div>
+      <section className='md:max-w-2xl w-full mx-auto'>
+        <Formik initialValues={iv} validationSchema={formValidation}>
+          <Form className='shadow-lg rounded-md p-6 space-y-5'>
+            <div className='flex flex-col'>
+              <label htmlFor="" className='text-sm text-gray-600 mb-2'>Research Title</label>
+              <Field name="title" placeholder="Enter Research Title..." className="w-full border outline-none px-3 py-2 border-gray-300 rounded-md" />
+              <ErrorMessage name='title' component={"p"} className='text-sm text-red-500 mt-2'/>
+            </div>
 
-                <div>
-                    <label htmlFor="">Select Category</label>
-                    <Field component="select">
-                        <option value="marketing">Marketing</option>
-                        <option value="politics">Politics</option>
-                        <option value="health">Health</option>
-                        <option value="programming">Programming</option>
-                        <option value="technology">Technology</option>
-                        <option value="recipes">Recipes</option>
-                        <option value="military">Military</option>
-                        <option value="history">History</option>
-                        <option value="movies">Movies</option>
-                        <option value="music">Music</option>
-                    </Field>
-                </div>
+            <div className='flex flex-col'>
+              <label htmlFor="" className='text-sm text-gray-600 mb-2'>Select Category</label>
+              <Field name="category" component="select" className="w-full border outline-none px-3 py-2 border-gray-300 rounded-md">
+                <option value="" disabled>Choose...</option>
+                <option value="marketing">Marketing</option>
+                <option value="politics">Politics</option>
+                <option value="health">Health</option>
+                <option value="programming">Programming</option>
+                <option value="technology">Technology</option>
+                <option value="recipes">Recipes</option>
+                <option value="military">Military</option>
+                <option value="history">History</option>
+                <option value="movies">Movies</option>
+                <option value="music">Music</option>
+              </Field>
+              <ErrorMessage name='category' component={"p"} className='text-sm text-red-500 mt-2'/>
+            </div>
 
-                <div>
-                    <label htmlFor="">Research Note</label>
-                    <Field/>
-                </div>
-            </Form>
+            <div>
+              <label htmlFor="" className='text-sm text-gray-600 mb-2'>Research Note</label>
+              <Field name="note" as="textarea" rows="10"  placeholder="Enter Research Note..." className="w-full border outline-none px-3 py-2 border-gray-300 rounded-md" />
+              <ErrorMessage name='note' component={"p"} className='text-sm text-red-500 mt-2'/>
+            </div>
+
+            <button type='submit' className='bg-orange-600 w-full flex items-center justify-center text-white p-3 rounded-md gap-2 font-semibold hover:bg-orange-700 transition-all duration-200'>
+              Upload Research
+              <FaPaperPlane />
+            </button>
+          </Form>
         </Formik>
       </section>
     </main>
