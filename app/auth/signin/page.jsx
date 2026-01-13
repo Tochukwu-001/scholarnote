@@ -3,10 +3,15 @@ import { FcGoogle } from "react-icons/fc";
 import { TiVendorApple } from "react-icons/ti";
 import { FaGithub } from "react-icons/fa6";
 import { auth, signIn } from "@/auth";
+import { redirect } from 'next/navigation';
 
 const page = async () => {
   const session = await auth();
   console.log(session);
+
+  if (session) {
+    redirect("/contribute")
+  }
   
   return (
     <main className='min-h-dvh grid lg:grid-cols-2'>
