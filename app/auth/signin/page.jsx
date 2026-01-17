@@ -1,12 +1,19 @@
-import React from 'react'
+import React from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { TiVendorApple } from "react-icons/ti";
 import { FaGithub } from "react-icons/fa6";
-import { auth, signIn } from "@/auth"
+import { auth, signIn } from "@/auth";
+import { redirect } from 'next/navigation';
 
 const page = async () => {
   const session = await auth();
   console.log(session);
+
+  if (session) {
+          redirect("/contribute")
+      }
+
+
   return (
     <main className='min-h-dvh grid lg:grid-cols-2'>
       <div className='md:p-10 p-3'>
@@ -19,7 +26,6 @@ const page = async () => {
             <input type="text" className='w-full border border-gray-200 rounded-md py-2 px-4 outline-none' placeholder='Enter your email...' />
             <button className='bg-orange-600 text-white w-full rounded-md p-2'>Sign In</button>
           </form>
-
 
           <form
             action={async () => {

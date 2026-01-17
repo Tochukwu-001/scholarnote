@@ -1,14 +1,22 @@
 "use client";
+import { useSession } from 'next-auth/react';
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { FiUser } from "react-icons/fi";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { IoMdClose } from "react-icons/io";
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const Navbar = () => {
 
-    const [open, setOpen] = useState(false);
+    const [openNav, setOpenNav] = useState(false);
+
+    const { data: session } = useSession();
+    // console.log(session);
+
 
     const navLinks = [
         {
@@ -29,6 +37,15 @@ const Navbar = () => {
         },
     ]
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <section className='sticky top-0'>
             <nav className='flex items-center justify-between md:px-10 p-3 py-3 shadow-md relative bg-white'>
@@ -44,10 +61,38 @@ const Navbar = () => {
                         ))
                     }
                 </div>
-                <Link href={"#"} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600  transition-all duration-200 max-md:ml-auto z-50'><FiUser /> <p className='max-md:hidden'>Sign In</p></Link>
+                {
+                    session ? <div>
+                        <button
+                            id="basic-button"
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
+                        >
+                            < Avatar alt={session?.user?.name} src={session?.user?.image} />
+                        </button>
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            slotProps={{
+                                list: {
+                                    'aria-labelledby': 'basic-button',
+                                },
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                            <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        </Menu>
+                    </div> : <Link href={"/auth/signin"} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600  transition-all duration-200 max-md:ml-auto z-50'>
+                        <FiUser /> <p className='max-md:hidden'>Sign In</p></Link>
+                }
 
                 {/* mobile and tablet navbar */}
-                <div className={`h-dvh bg-white lg:hidden w-full absolute top-0 left-0 flex-col items-center gap-10 pt-20 ${open ? "flex" : "hidden"} `}>
+                <div className={`h-dvh bg-white lg:hidden w-full absolute top-0 left-0 flex-col items-center gap-10 pt-20 ${openNav ? "flex" : "hidden"} `}>
                     {
                         navLinks.map((item, i) => (
                             <Link key={i} href={item.url}>{item.label}</Link>
@@ -55,9 +100,9 @@ const Navbar = () => {
                     }
                 </div>
 
-                <button onClick={() => { setOpen(!open) }} className='md:hidden ml-3 text-xl z-50'>
+                <button onClick={() => { setOpenNav(!openNav) }} className='md:hidden ml-3 text-xl z-50'>
                     {
-                        open ? <IoMdClose /> : <HiMenuAlt3 />
+                        openNav ? <IoMdClose /> : <HiMenuAlt3 />
                     }
                 </button>
             </nav>
