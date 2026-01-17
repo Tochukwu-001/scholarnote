@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -85,7 +85,8 @@ const Navbar = () => {
                         >
                             <MenuItem onClick={handleClose}>Profile</MenuItem>
                             <MenuItem onClick={handleClose}>My account</MenuItem>
-                            <MenuItem onClick={handleClose}>Logout</MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <button onClick={() => signOut()}>Sign Out</button></MenuItem>
                         </Menu>
                     </div> : <Link href={"/auth/signin"} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600  transition-all duration-200 max-md:ml-auto z-50'>
                         <FiUser /> <p className='max-md:hidden'>Sign In</p></Link>
