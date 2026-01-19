@@ -3,9 +3,10 @@ import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { FaPaperPlane } from "react-icons/fa";
 import * as Yup from 'yup';
+import { collection, addDoc } from "firebase/firestore";
+import { db } from '@/config/firebase';
 
-
-const Client = () => {
+const Client = ({ session }) => {
   const iv = {
     title: "",
     category: "",
@@ -23,12 +24,36 @@ const Client = () => {
       <h1 className='md:max-w-2xl text-center text-2xl md:text-3xl text-gray-700 mx-auto font-bold my-10'>Fill out the form below to contribute to our fast growing community of Researchers</h1>
 
       <section className='md:max-w-2xl w-full mx-auto'>
-        <Formik initialValues={iv} validationSchema={formValidation}>
+        <Formik
+          initialValues={iv}
+          validationSchema={formValidation}
+          onSubmit={async (values, { resetForm }) => {
+            const dbObject = {
+              ...values,
+              userId: session.user.id,
+              image: session.user.image,
+              author: session.user.name,
+              timestamp: new Date().toLocaleDateString()
+            }
+
+            try {
+              const docRef = await addDoc(collection(db, "researches"), dbObject);
+            } catch (error) {
+              console.error("An error occurred", error)
+              alert("An error occurred while uploading.")
+            }
+
+            // console.log("Document written with ID: ", docRef.id);
+            // console.log(dbObject);
+            resetForm();
+
+          }}
+        >
           <Form className='shadow-lg rounded-md p-6 space-y-5'>
             <div className='flex flex-col'>
               <label htmlFor="" className='text-sm text-gray-600 mb-2'>Research Title</label>
               <Field name="title" placeholder="Enter Research Title..." className="w-full border outline-none px-3 py-2 border-gray-300 rounded-md" />
-              <ErrorMessage name='title' component={"p"} className='text-sm text-red-500 mt-2'/>
+              <ErrorMessage name='title' component={"p"} className='text-sm text-red-500 mt-2' />
             </div>
 
             <div className='flex flex-col'>
@@ -46,13 +71,13 @@ const Client = () => {
                 <option value="movies">Movies</option>
                 <option value="music">Music</option>
               </Field>
-              <ErrorMessage name='category' component={"p"} className='text-sm text-red-500 mt-2'/>
+              <ErrorMessage name='category' component={"p"} className='text-sm text-red-500 mt-2' />
             </div>
 
             <div>
               <label htmlFor="" className='text-sm text-gray-600 mb-2'>Research Note</label>
-              <Field name="note" as="textarea" rows="10"  placeholder="Enter Research Note..." className="w-full border outline-none px-3 py-2 border-gray-300 rounded-md" />
-              <ErrorMessage name='note' component={"p"} className='text-sm text-red-500 mt-2'/>
+              <Field name="note" as="textarea" rows="10" placeholder="Enter Research Note..." className="w-full border outline-none px-3 py-2 border-gray-300 rounded-md" />
+              <ErrorMessage name='note' component={"p"} className='text-sm text-red-500 mt-2' />
             </div>
 
             <button type='submit' className='bg-orange-600 w-full flex items-center justify-center text-white p-3 rounded-md gap-2 font-semibold hover:bg-orange-700 transition-all duration-200'>
