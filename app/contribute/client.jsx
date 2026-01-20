@@ -1,0 +1,89 @@
+"use client";
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { FaPaperPlane } from 'react-icons/fa6';
+import * as Yup from 'yup';
+import {collection, addDoc} from "firebase/firestore";
+
+
+const Client = ({session}) => {
+  const iv = {
+    title: "",
+    category: "",
+    note: ""
+  }
+  const formValidation = Yup.object({
+    title: Yup.string().required("This is a required field").max(100, "max of 100 characters"),
+    category: Yup.string().required("This is a required field"),
+    note: Yup.string().required("This is a required field")
+  });
+  return (
+    <main className='min-h-dvh p-3'>
+      <h1 className='md:max-w-2xl text-center md:text-3xl text-gray-700 mx-auto font-bold my-10'>
+        Fill out the form below to contribute to our fast growing community of Researchers</h1>
+
+      <section className='md:max-w-2xl mx-auto w-full'>
+        <Formik initialValues={iv}
+        validationSchema={formValidation}
+        onSubmit={async (values, {resetForm}) => {
+          const dbObject = {
+            ...values,
+            userId: session.user.id,
+            image: session.user.image,
+            author: session.user.name,
+            timestamp: new Date().toLocaleDateString()
+          }
+          try{
+            const docRef = await addDoc(collection(db, "researches"),dbObject);
+          } catch (error){
+            console.log("an error occurred", error);
+            alert("an error occurred while uploading.")
+          }
+          // console.log(dbObject);
+          resetForm();
+        }}>
+
+            <Form className='shadow-lg rounded-md p-6 space-y-3'>
+                <div className='flex flex-col'>
+                    <label htmlFor="" className='text-sm text-gray-600'>Research Title</label>
+                    <Field name='title' placeholder="Enter Research Title..." className='w-full border outline-none px-3 py-2 border-gray-300 rounded-md'/>
+                <ErrorMessage name='title' component={"p"} className='text-sm text-red-500 mt-2'/>
+                </div>
+
+                <div className='flex flex-col'>
+                    <label htmlFor="" className='text-sm text-gray-600'>Select Category</label>
+                    <Field name='category' component="select" className='w-full border outline-none px-3 py-2 border-gray-300 rounded-md'>
+                        <option value="" disabled>Choose...</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="politics">Politics</option>
+                        <option value="health">Health</option>
+                        <option value="programming">Programming</option>
+                        <option value="technology">Technology</option>
+                        <option value="recipes">Recipes</option>
+                        <option value="military">Military</option>
+                        <option value="history">History</option>
+                        <option value="movies">Movies</option>
+                        <option value="music">Music</option>
+                    </Field>
+                    <ErrorMessage name='category' component={"p"} className='text-sm text-red-500 mt-2'/>
+
+                </div>
+
+                <div className='flex flex-col'>
+                    <label htmlFor="" className='text-sm text-gray-600'>Research Note</label>
+                    <Field name='note' as='textarea' rows='10' placeholder="Enter Research Note..." className='w-full border outline-none px-3 py-2 border-gray-300 rounded-md'/>
+                  <ErrorMessage name='note' component={"p"} className='text-sm text-red-500 mt-2'/>
+                </div>
+                <button type="submit" className='bg-orange-600 w-full flex items-center justify-center text-white p-3 rounded-md gap-2
+                font-semibold hover:bg-orange-700 transition-all duration-200'>
+                  Upload Research
+                  <FaPaperPlane/>
+                  </button>
+            </Form>
+        </Formik>
+      </section>
+    </main>
+  )
+}
+
+export default Client
