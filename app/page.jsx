@@ -285,13 +285,13 @@ export default function Home() {
           </p>
           <div className="flex items-center justify-center gap-10 max-md:flex-col">
             <Link
-              href={"#signup"}
+              href={"/auth/signin"}
               className="bg-orange-600 px-8 py-4 uppercase font-semibold max-md:w-full text-center"
             >
               Get Started Free
             </Link>
             <Link
-              href={"#learn-more"}
+              href={"/about"}
               className="border px-8 py-4 font-semibold max-md:w-full text-center"
             >
               Learn More
