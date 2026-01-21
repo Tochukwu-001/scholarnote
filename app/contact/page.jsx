@@ -106,7 +106,7 @@ const page = async () => {
 
             <button
               type="submit"
-              className="w-full rounded-lg text-[#154B48] border-[#154B48] py-4 font-semibold hover:bg-[#154B48]/10 transition border"
+              className="w-full rounded-lg text-[#154B48] border-[#154B48] py-4 font-semibold hover:bg-[#154B48]/10 hover:border-[#154B48]/10 transition border"
             >
               Send Message
             </button>

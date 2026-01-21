@@ -47,7 +47,7 @@ const Navbar = () => {
     };
 
     return (
-        <section className='sticky top-0'>
+        <section className='sticky top-0 z-50'>
             <nav className='flex items-center justify-between md:px-10 p-3 py-3 shadow-md relative bg-white'>
                 <Link href={"/"} className='flex items-center gap-1 z-50'>
                     <Image src={"/logo.png"} alt='logo' width={500} height={500} className='w-10 h-10' />
@@ -62,13 +62,14 @@ const Navbar = () => {
                     }
                 </div>
                 {
-                    session ? <div>
+                    session ? <div className='max-md:ml-auto'>
                         <button
                             id="basic-button"
                             aria-controls={open ? 'basic-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                             onClick={handleClick}
+                            className='ml-10'
                         >
                             < Avatar alt={session?.user?.name} src={session?.user?.image} />
                         </button>
