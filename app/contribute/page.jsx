@@ -11,7 +11,7 @@ const page = async () => {
   }
   return (
     <main>
-      <Client session={session}/>
+      <Client session={session} />
     </main>
   )
 }

@@ -7,13 +7,12 @@ import { redirect } from 'next/navigation';
 
 const page = async () => {
   const session = await auth();
-  console.log(session);
+  // console.log(session);
 
   if (session) {
-          redirect("/contribute")
-      }
-
-
+    redirect("/contribute")
+  }
+  
   return (
     <main className='min-h-dvh grid lg:grid-cols-2'>
       <div className='md:p-10 p-3'>

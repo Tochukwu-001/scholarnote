@@ -1,5 +1,5 @@
 "use client";
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
@@ -9,6 +9,8 @@ import { IoMdClose } from "react-icons/io";
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { signOut } from "next-auth/react"
+
 
 const Navbar = () => {
 
@@ -16,7 +18,6 @@ const Navbar = () => {
 
     const { data: session } = useSession();
     // console.log(session);
-
 
     const navLinks = [
         {
@@ -71,7 +72,7 @@ const Navbar = () => {
                             onClick={handleClick}
                             className='ml-10'
                         >
-                            < Avatar alt={session?.user?.name} src={session?.user?.image} />
+                            <Avatar alt={session?.user?.name} src={session?.user?.image} />
                         </button>
                         <Menu
                             id="basic-menu"
@@ -84,13 +85,18 @@ const Navbar = () => {
                                 },
                             }}
                         >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
-                            <MenuItem onClick={handleClose}>My account</MenuItem>
                             <MenuItem onClick={handleClose}>
-                                <button onClick={() => signOut()}>Sign Out</button></MenuItem>
+                                <Link href={"/profile"}>Profile</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link href={"/contribute"}>Contribute</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <button onClick={() => signOut()}>Sign Out</button>
+                            </MenuItem>
                         </Menu>
-                    </div> : <Link href={"/auth/signin"} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600  transition-all duration-200 max-md:ml-auto z-50'>
-                        <FiUser /> <p className='max-md:hidden'>Sign In</p></Link>
+                    </div>
+                        : <Link href={"/auth/signin"} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600  transition-all duration-200 max-md:ml-auto z-50'><FiUser /> <p className='max-md:hidden'>Sign In</p></Link>
                 }
 
                 {/* mobile and tablet navbar */}
