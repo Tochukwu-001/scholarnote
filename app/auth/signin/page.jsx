@@ -3,6 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { TiVendorApple } from "react-icons/ti";
 import { FaGithub } from "react-icons/fa6";
 import { auth, signIn } from "@/auth";
+import { redirect } from 'next/navigation';
 
 const page = async () => {
   const session = await auth();

@@ -3,9 +3,12 @@ import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { FaPaperPlane } from "react-icons/fa";
  import * as Yup from 'yup';
+import { Timestamp } from 'firebase-admin/firestore';
+import { collection, addDoc } from "firebase/firestore"; 
+import { db } from '@/config/firebase';
 
 
-const Client = () => {
+const Client = (session) => {
   const iv = {
     title:"",
     category:"",
@@ -23,7 +26,26 @@ const Client = () => {
        mx-auto font-bold my-10'>Fill out the form below to contribute to our fast growing community of Researchers</h1>
 
       <section className='md:max-w-2xl w-full mx-auto'>
-        <Formik initialValues={iv} validationSchema={formValidation}>
+        <Formik initialValues={iv} validationSchema={formValidation}
+        onSubmit={async(values)=>{const dbObject={
+          ...values,
+          userId: session.user.id,
+          image: session.user.image,
+          author: session.user.name,
+          Timestamp: new Date().toLocaleDateString()
+        
+        }
+        try{
+
+       
+        const docRef = await addDoc(collection(db, "researches"), dbObject); 
+      } catch (error) {
+        console.error("An error occured while uploading")
+      }
+//</section>console.log("Document written with ID: ", docRef.id);
+         // console.log(dbObject);
+          resetForm();
+          }}>
             <Form className='space-y-3 shadow-lg rounded-md p-3'>
                 <div className='flex flex-col'>
                     <label htmlFor="" className='text-sm text-gray-600 mb-2'>Research Title</label>
