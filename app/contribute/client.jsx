@@ -5,9 +5,31 @@ import { FaPaperPlane } from "react-icons/fa";
 import * as Yup from 'yup';
 import { collection, addDoc } from "firebase/firestore";
 import { db } from '@/config/firebase';
+import { RiLoader2Fill } from "react-icons/ri";
+import Snackbar from '@mui/material/Snackbar';
+import Grid from '@mui/material/Grid';
+
+
 
 const Client = ({ session }) => {
+
   const [sending, setSending] = useState(false)
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal, open } = state;
+
+  const handleClick = (newState) => {
+    setState({ ...newState, open: true });
+  };
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+
+
   const iv = {
     title: "",
     category: "",
@@ -38,10 +60,14 @@ const Client = ({ session }) => {
             }
 
             try {
+              setSending(true)
               const docRef = await addDoc(collection(db, "researches"), dbObject);
+              handleClick({ vertical: 'top', horizontal: 'right' })
             } catch (error) {
               console.error("An error occurred", error)
               alert("An error occurred while uploading.")
+            } finally {
+              setSending(false)
             }
 
             // console.log("Document written with ID: ", docRef.id);
@@ -81,12 +107,33 @@ const Client = ({ session }) => {
               <ErrorMessage name='note' component={"p"} className='text-sm text-red-500 mt-2' />
             </div>
 
-            <button type='submit' className='bg-orange-600 w-full flex items-center justify-center text-white p-3 rounded-md gap-2 font-semibold hover:bg-orange-700 transition-all duration-200'>
-              Upload Research
-              <FaPaperPlane />
+            <button disabled={sending} type='submit' className='bg-orange-600 w-full flex items-center justify-center text-white p-3 rounded-md gap-2 font-semibold hover:bg-orange-700 transition-all duration-200'>
+              {
+                sending ?
+                  <span className='flex items-center justify-center gap-1'>
+                    <RiLoader2Fill className='animate-spin text-xl' />
+                    Sending...
+                  </span> :
+                  <span className='flex items-center justify-center gap-1'>
+                    Upload Research
+                    <FaPaperPlane />
+                  </span>
+              }
             </button>
+
+            {/* <button onClick={handleClick({ vertical: 'top', horizontal: 'right' })}>
+            Top-Right
+          </button> */}
+
           </Form>
         </Formik>
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={handleClose}
+          message="Successfully Submitted!!!"
+          key={vertical + horizontal}
+        />
       </section>
     </main>
   )
