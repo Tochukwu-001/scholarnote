@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { FaPaperPlane } from "react-icons/fa";
 import * as Yup from 'yup';
@@ -7,6 +7,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from '@/config/firebase';
 
 const Client = ({ session }) => {
+  const [sending, setSending] = useState(false)
   const iv = {
     title: "",
     category: "",

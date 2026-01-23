@@ -86,8 +86,12 @@ const Navbar = () => {
                                 },
                             }}
                         >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
-                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link href={"/profile"}>My Profile</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link href={"/contribute"}>Contribute</Link>
+                            </MenuItem>
                             <MenuItem onClick={handleClose}>
                                 <button onClick={() => signOut()}>Sign Out</button>
                             </MenuItem>

@@ -47,7 +47,7 @@ const page = () => {
               <div>
                 <blockquote className='flex items-center justify-between'>
                   <span className='flex items-center gap-1'>
-                    <img src={item.image} alt="John doe" className='w-10 h-10 rounded-full' />
+                    <img src={item.image} alt={item.author} className='w-10 h-10 rounded-full' />
                     <p className='text-xl font-semibold text-gray-800'>{item.author}</p>
                   </span>
                   <button>
