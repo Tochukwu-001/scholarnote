@@ -16,7 +16,7 @@ const Navbar = () => {
 
     const [openNav, setOpenNav] = useState(false);
 
-    const {data:session} = useSession();
+    const { data: session } = useSession();
     // console.log(session);
 
     const navLinks = [
@@ -37,13 +37,14 @@ const Navbar = () => {
             url: "/resources"
         },
     ]
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
-      setAnchorEl(null);
+        setAnchorEl(null);
     };
 
     return (
@@ -61,37 +62,42 @@ const Navbar = () => {
                         ))
                     }
                 </div>
+
                 {
-                    session ?   <div className='max-md:ml-auto'>
-                    <button className='ml-10'
-                      id="basic-button"
-                      aria-controls={open ? 'basic-menu' : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? 'true' : undefined}
-                      onClick={handleClick}
-                    >
-                      <Avatar alt={session?.user?.name} src={session?.user?.image} />
-                    </button>
-                    <Menu
-                      id="basic-menu"
-                      anchorEl={anchorEl}
-                      open={open}
-                      onClose={handleClose}
-                      slotProps={{
-                        list: {
-                          'aria-labelledby': 'basic-button',
-                        },
-                      }}
-                    >
-                      <MenuItem onClick={handleClose}>Profile</MenuItem>
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
-                      <MenuItem onClick={handleClose}>
-                      <button onClick={() => signOut()}>Sign Out</button>
-                      </MenuItem>
-                    </Menu>
-                  </div>
-                    : <Link href={"/auth/signin"} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600  
-                    transition-all duration-200 max-md:ml-auto z-50'><FiUser /> <p className='max-md:hidden'>Sign In</p></Link>
+                    session ? <div className='max-md:ml-auto'>
+                        <button
+                            id="basic-button"
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
+                            className='ml-10'
+                        >
+                            <Avatar alt={session?.user?.name} src={session?.user?.image} />
+                        </button>
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            slotProps={{
+                                list: {
+                                    'aria-labelledby': 'basic-button',
+                                },
+                            }}
+                        >
+                            <MenuItem onClick={handleClose}>
+                                <Link href={"/profile"}>My Profile</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <Link href={"/contribute"}>Contribute</Link>
+                            </MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                <button onClick={() => signOut()}>Sign Out</button>
+                            </MenuItem>
+                        </Menu>
+                    </div>
+                        : <Link href={"/auth/signin"} className='ml-10 border px-4 py-1 flex items-center gap-1 hover:text-orange-600  transition-all duration-200 max-md:ml-auto z-50'><FiUser /> <p className='max-md:hidden'>Sign In</p></Link>
                 }
 
                 {/* mobile and tablet navbar */}

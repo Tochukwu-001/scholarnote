@@ -1,16 +1,17 @@
 "use server";
 import React from 'react'
 import Client from './client';
+import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
-import { auth } from '../../auth';
 
 const page = async () => {
   const session = await auth();
-  if (!session)
-  redirect("/auth/signin")
+  if (!session) {
+    redirect("/auth/signin")
+  }
   return (
     <main>
-      <Client session={session}/>
+      <Client session={session} />
     </main>
   )
 }

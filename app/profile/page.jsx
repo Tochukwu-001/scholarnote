@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
@@ -40,3 +41,45 @@ const page = async () => {
 }
 
 export default page
+=======
+import { auth, signOut } from '@/auth'
+import { redirect } from 'next/navigation';
+import React from 'react'
+
+const page = async () => {
+    const session = await auth()
+    console.log(session);
+
+    if (!session) {
+        redirect("/auth/signin")
+    }
+
+    return (
+        <main className='min-h-dvh'>
+            <section className='shadow-lg max-w-2xl p-6 mx-auto my-10'>
+                <h1 className='md:text-5xl text-center font-bold text-gray-900 mb-10'>My Account</h1>
+
+                <div className='flex flex-col items-center justify-center gap-5'>
+                    <h1 className='text-2xl font-semibold text-gray-800'>
+                        {session.user.name}
+                    </h1>
+                    <p className='text-xl font-light text-gray-800'>
+                        {session.user.email}
+                    </p>
+
+                    <img src={session.user.image} alt={session.user.name.slice(0, 2).toUpperCase()} className='w-50 h-50 rounded-full' />
+
+                    <form action={async () => {
+                        "use server"
+                        await signOut()
+                    }}>
+                        <button type="submit" className='bg-red-600 px-20 py-2 text-white text-xl rounded-md cursor-pointer hover:bg-red-700 transition-all duration-200'>Sign Out</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    )
+}
+
+export default page
+>>>>>>> 092de0910cfd21688e58f74c95e77473b9f9668c
