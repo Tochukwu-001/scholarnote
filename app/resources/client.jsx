@@ -69,7 +69,7 @@ const Client = ({ session }) => {
                                             </span>
                                             {
                                                 item.userId == uid &&
-                                                <button onClick={()=> handleDelete(item.postId)}>
+                                                <button onClick={() => handleDelete(item.postId)}>
                                                     <IoTrashOutline />
                                                 </button>
                                             }
@@ -85,7 +85,7 @@ const Client = ({ session }) => {
 
                                         <blockquote className='flex items-center justify-between'>
                                             <p className='text-xs text-gray-800'>Posted on {item.timestamp}</p>
-                                            <Link className='flex items-center hover:underline text-blue-600' href={"#"}>Read More <GoArrowUpRight /></Link>
+                                            <Link className='flex items-center hover:underline text-blue-600' href={`/resources/${item.postId}`}>Read More <GoArrowUpRight /></Link>
                                         </blockquote>
                                     </div>
                                 </div>
