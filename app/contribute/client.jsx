@@ -1,16 +1,33 @@
-"use client"
+"use client";
 import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { FaPaperPlane } from 'react-icons/fa6';
 import * as Yup from 'yup';
 import { collection, addDoc } from "firebase/firestore";
 import { db } from '@/config/firebase';
-import { RiLoader2Fill } from "react-icons/ri"
+import { RiLoader2Fill } from "react-icons/ri";
 import Snackbar from '@mui/material/Snackbar';
-import Grid from '@mui/material/Grid';
+
 
 const Client = ({ session }) => {
+
   const [sending, setSending] = useState(false)
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal, open } = state;
+
+  const handleClick = (newState) => {
+    setState({ ...newState, open: true });
+  };
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+
+
   const iv = {
     title: "",
     category: "",
@@ -44,6 +61,7 @@ const Client = ({ session }) => {
             try {
               setSending(true)
               const docRef = await addDoc(collection(db, "researches"), dbObject);
+              handleClick({ vertical: 'top', horizontal: 'right' })
             } catch (error) {
               console.error("An error occurred", error)
               alert("An error occurred while uploading.")
@@ -92,7 +110,7 @@ const Client = ({ session }) => {
               {
                 sending ?
                   <span className='flex items-center justify-center gap-1'>
-                    <RiLoader2Fill className='animate-spin text-xl'/>
+                    <RiLoader2Fill className='animate-spin text-xl' />
                     Sending...
                   </span> :
                   <span className='flex items-center justify-center gap-1'>
@@ -101,8 +119,20 @@ const Client = ({ session }) => {
                   </span>
               }
             </button>
+
+            {/* <button onClick={handleClick({ vertical: 'top', horizontal: 'right' })}>
+            Top-Right
+          </button> */}
+
           </Form>
         </Formik>
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={handleClose}
+          message="Successfully Submitted!!!"
+          key={vertical + horizontal}
+        />
       </section>
     </main>
   )
