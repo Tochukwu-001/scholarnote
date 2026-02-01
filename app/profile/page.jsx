@@ -2,6 +2,7 @@ import { auth, signOut } from '@/auth'
 import { redirect } from 'next/navigation';
 import React from 'react'
 import { doc, updateDoc } from "firebase/firestore";
+import UpdateProfile from './UpdateProfile';
 
 const page = async () => {
     const session = await auth()
@@ -33,10 +34,9 @@ const page = async () => {
                         <button type="submit" className='bg-red-600 px-20 py-2 text-white text-xl rounded-md cursor-pointer hover:bg-red-700 transition-all duration-200'>Sign Out</button>
                     </form>
                 </div>
-             <div>
-                UpdateProfile
-             </div>
+                    <UpdateProfile session={session}/>
             </section>
+
         </main>
     )
 }

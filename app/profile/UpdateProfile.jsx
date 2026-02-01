@@ -1,14 +1,40 @@
-import React from 'react'
+"use client";
+import React, { useState } from 'react'
+import { doc, updateDoc } from "firebase/firestore";
 
-const UpdateProfile = () => {
-  return (
-    <div className='w-1/2 mx-auto mt-10'>
-                <form action="" className='space-y-5'>
-                    <input type="text" className='w-full outline-none border border-gray-300 rounded-md px-3 py-2' placeholder='Enter your name...' value={username}/>
-                    <button className='w-full bg-orange-600 text-white rounded-md p-2 hover:bg-orange transition-all duration-200 cursor-pointer'>Update Profile</button>
-                </form>
+const UpdateProfile = ({ session }) => {
+
+    const username = session.user.name
+    const authId = session.user.id
+
+    const [currentName, setCurrentName] = useState(username)
+
+    const handleUpdate = async () => {
+        try {
+            const docRef = doc(db, "users", id);
+    
+            // Set the "capital" field of the city 'DC'
+            await updateDoc(docRef, {
+                name: currentName
+            });
+            alert("Profile Updated Successfully!!")
+            
+        } catch (error) {
+            console.error("An error occured", error)
+            alert("An error occurred while updating profile.")
+            
+        }
+    }
+
+
+    return (
+        <div className='w-1/2 mx-auto mt-10'>
+            <div action="" className='space-y-5'>
+                <input onChange={() => setCurrentName(event.target.value)} type="text" className='w-full outline-none border border-gray-300 rounded-md px-3 py-2' placeholder='Enter your name...' value={username} />
+                <button onClick={()=> handleUpdate(authId)} className='w-full bg-orange-600 text-white rounded-md p-2 hover:bg-orange-700 transition-all duration-200 cursor-pointer'>Update Profile</button>
             </div>
-  )
+        </div>
+    )
 }
 
 export default UpdateProfile

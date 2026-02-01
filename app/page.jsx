@@ -15,13 +15,13 @@ export default function Home() {
             </p>
             <div className="flex items-center gap-10 max-md:flex-col">
               <Link
-                href={"#catalogue"}
+                href={"/contribute"}
                 className="bg-orange-600 px-6 py-3 uppercase font-semibold max-md:w-full text-center"
               >
                 View Our Catalogue
               </Link>
               <Link
-                href={"#about"}
+                href={"/about"}
                 className="border px-6 py-3 font-semibold max-md:w-full text-center"
               >
                 Find Out More
