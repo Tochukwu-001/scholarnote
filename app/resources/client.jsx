@@ -69,7 +69,7 @@ const Client = ({ session }) => {
                                             </span>
                                             {
                                                 item.userId == uid &&
-                                                <button onClick={()=> handleDelete(item.postId)}>
+                                                <button onClick={() => handleDelete(item.postId)}>
                                                     <IoTrashOutline />
                                                 </button>
                                             }

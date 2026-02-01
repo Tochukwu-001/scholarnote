@@ -3,36 +3,27 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from '@/config/firebase';
 
 
-const fetchSinglePost = async (id) => {
+const page = async () => {
 
-  try {
-    const docRef = doc(db, "researches", id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return { id, ...docSnap.data() };
-    } else {
-      return null;
+    const fetchSinglePost = async (id) => {
+        const docRef = doc(db, "researches", id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+        } else {
+            // docSnap.data() will be undefined in this case
+            console.log("No such document!");
+        }
+
     }
 
-  } catch (error) {
-console.error("AN ERROE OCCURED", error)
-    throw error;
-  }
-
-}
-const page = async ({ params }) => {
-  const { id } = await params;
-  console.log(id);
-
-  const post = await fetchSinglePost(id);
-
-  if (!post) {
-    return <p>Post not found.</p>;
-  } 
-
-  return (
-    <div></div>
-  )
+    fetchSinglePost()
+    return (
+        <div>
+            dynamic route
+        </div>
+    )
 }
 
 export default page
