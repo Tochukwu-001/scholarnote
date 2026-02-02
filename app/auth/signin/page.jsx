@@ -42,10 +42,17 @@ const page = async () => {
             <TiVendorApple className='text-xl' />
             <p>Continue with Apple</p>
           </button>
-          <button className='border border-gray-200 flex items-center gap-2 w-full justify-center p-2 rounded-full'>
-            <FaGithub />
-            <p>Continue with Github</p>
-          </button>
+
+          <form
+    action={async () => {
+        "use server"
+        await signIn("github")
+    }}>
+    <button type='submit' className='border border-gray-200 flex items-center gap-2 w-full justify-center p-2 rounded-full'>
+                <FaGithub />
+                <p>continue with Github</p>
+            </button>
+    </form>
         </section>
       </div>
       <div className="min-h-dvh bg-[url('/bg1.jpg')] bg-no-repeat bg-center bg-cover max-lg:hidden"></div>
